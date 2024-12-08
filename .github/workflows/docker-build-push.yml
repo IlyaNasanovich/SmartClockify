@@ -23,11 +23,11 @@ jobs:
       - name: Populate config.py
         run: |
           cat <<EOF > config.py
-          BOT_TOKEN = '\''${{ secrets.BOT_TOKEN }}'\''
-          DB_PATH = '\''${{ secrets.DB_PATH }}'\''
-          OPENAI_KEY = '\''${{ secrets.OPENAI_KEY }}'\''
-          MIXPANEL_PROJECT_ID = '\''${{ secrets.MIXPANEL_PROJECT_ID }}'\''
-          MIXPANEL_AUTH_TOKEN = '\''${{ secrets.MIXPANEL_AUTH_TOKEN }}'\''
+          BOT_TOKEN = '${{ secrets.BOT_TOKEN }}'
+          DB_PATH = '${{ secrets.DB_PATH }}'
+          OPENAI_KEY = '${{ secrets.OPENAI_KEY }}'
+          MIXPANEL_PROJECT_ID = '${{ secrets.MIXPANEL_PROJECT_ID }}'
+          MIXPANEL_AUTH_TOKEN = '${{ secrets.MIXPANEL_AUTH_TOKEN }}'
           EOF
 
       - name: Build PyChatbot Docker image
