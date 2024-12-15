@@ -24,9 +24,9 @@ def get_fsm_state(chat: int, user: int):
         return value[0] if value else None
 
 
-def update_clockify_info(chat: int, user: int, apikey: str, user_id: str, name: str, email: str):
+def update_clockify_info(chat: int, user: int, apikey: str, user_id: str, name: str, email: str, user_timezone: str):
     with open('./sc_data/queries/save_clockify_info.sql') as file:
-        execute_query(file.read(), (apikey, user_id, name, email, chat, user))
+        execute_query(file.read(), (apikey, user_id, name, email, user_timezone, chat, user))
 
 
 def get_apikey(chat: int, user: int):

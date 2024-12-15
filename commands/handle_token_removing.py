@@ -14,7 +14,7 @@ async def handle_token_removing(message: Message, state: FSMContext) -> None:
     chat_id = user_data['chat_id']
     user_id = user_data['user_id']
 
-    update_clockify_info(chat_id, user_id, apikey='', user_id=0, email='', name='')
+    update_clockify_info(chat_id, user_id, apikey='', user_id='', email='', name='', user_timezone='')
 
     await state.set_state(ChatBotState.initialize)
     await message.answer(

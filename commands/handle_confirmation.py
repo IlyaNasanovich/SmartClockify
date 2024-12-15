@@ -35,7 +35,8 @@ async def handle_removing_tracking(_: CallbackQuery, state: FSMContext):
         log_business_event('track_time', {
             'distinct_id': str(user_id),
             '$insert_id': str(uuid4()),
-            'time': int(datetime.utcnow().timestamp())
+            'time': int(datetime.utcnow().timestamp()),
+            'end_at': tracking_time.end
         })
 
     await bot.delete_message(chat_id=chat_id, message_id=message_id)

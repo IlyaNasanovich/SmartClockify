@@ -8,6 +8,7 @@ class TrackTime(BaseModel):
     description: str = Field(description='What user worked on')
     start_work_at: str = Field(description='When user started to work. Format HH:MM')
     end_work_at: str = Field(description='When user ended to work. Format HH:MM')
+    day_at: str = Field(description='ISO Presentation of date in the format yyyy-MM-dd')
 
 
 class TrackTimeResponse(BaseModel):

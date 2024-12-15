@@ -22,12 +22,13 @@ async def handle_initialize(message: Message, state: FSMContext) -> None:
         clockify_user_id = user_info.id
         user_email = user_info.email
         user_name = user_info.name
+        user_timezone = user_info.settings.time_zone
 
-        update_clockify_info(chat_id, user_id, user_api_key, clockify_user_id, user_name, user_email)
+        update_clockify_info(chat_id, user_id, user_api_key, clockify_user_id, user_name, user_email, user_timezone)
 
         await state.set_state(ChatBotState.tracking)
         await message.answer(
-            f'Initialized successfully. You can start tracking your working time.\nYou can log time only for this day.\nExample:\nToday I worked 12:00 to 14:30 on Excel project, I did a big table about our assets',
+            f'Initialized successfully. You can start tracking your working time.\nExample:\nToday I worked 12:00 to 14:30 on Excel project, I did a big table about our assets\nYou can specify the day, for example, I worked yesterday or 3 days ago',
             reply_markup=ReplyKeyboardMarkup(
                 keyboard=[
                     [KeyboardButton(text='Delete token')]

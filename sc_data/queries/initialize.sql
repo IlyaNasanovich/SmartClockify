@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
     clockify_user_id TEXT,
     clockify_name TEXT,
     clockify_email TEXT,
+    clockify_timezone TEXT,
     tracking_time_confirmation TEXT,
     confirmation_message_id INTEGER,
     PRIMARY KEY (chat_id, user_id)

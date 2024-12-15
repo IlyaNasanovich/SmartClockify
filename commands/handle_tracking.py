@@ -22,7 +22,7 @@ async def handle_tracking(message: Message, state: FSMContext) -> None:
             'Your apikey not found'
         )
 
-        update_clockify_info(chat_id, user_id, apikey='', user_id='', email='', name='')
+        update_clockify_info(chat_id, user_id, apikey='', user_id='', email='', name='', user_timezone='')
 
         await state.set_state(ChatBotState.initialize)
 

@@ -13,19 +13,25 @@ from pydantic.json import pydantic_encoder
 from langchain_community.callbacks.manager import get_openai_callback
 
 from clockify.track_time.track_time_request import save_tracked_time, ClockifyTrackTimeRequest
-from datetime import datetime, date, timezone
+from datetime import datetime, date
 
 from mixpanel import log_business_event
 from sc_data.repository import save_tracking_times
+from pytz import timezone, utc
 
 
-def handle_time(logged_time: str):
+def handle_time(user_timezone: str, day: str, logged_time: str):
     time_obj = datetime.strptime(logged_time, '%H:%M').time()
+    day_obj = datetime.strptime(day, '%Y-%m-%d').date()
 
-    today_date = date.today()
-    combined_datetime = datetime.combine(today_date, time_obj)
+    combined_datetime = datetime.combine(day_obj, time_obj)
 
-    return combined_datetime.astimezone(timezone.utc).isoformat()
+    user_tz = timezone(user_timezone)
+    localized_datetime = user_tz.localize(combined_datetime)
+
+    utc_datetime = localized_datetime.astimezone(utc)
+
+    return utc_datetime.isoformat()
 
 
 async def track_time_text(message_id: int, trace_id: str, chat_id: int, user_id: int, clockify_apikey: str, message: str) -> str:
@@ -44,6 +50,7 @@ async def track_time_text(message_id: int, trace_id: str, chat_id: int, user_id:
     prompt = [
         SystemMessage('You are a helpful assistant who must process the user request to track the working time'),
         SystemMessage(f'Here\'s the list of projects of this user: ```json\n{projects_json}\n```'),
+        SystemMessage(f'Today is {date.today().isoformat()}'),
         HumanMessage(message)
     ]
 
@@ -68,15 +75,17 @@ async def track_time_text(message_id: int, trace_id: str, chat_id: int, user_id:
 
     tracking_times = []
 
+    user_timezone = user_info.settings.time_zone
+
     for track_time in response.track_times:
         found_project = [project for project in projects if project.id == track_time.project_id][0]
 
-        res_str += f' > {track_time.start_work_at} - {track_time.end_work_at} [{found_project.name}] {track_time.description}\n'
+        res_str += f' > {track_time.day_at}. {track_time.start_work_at} - {track_time.end_work_at} [{found_project.name}] {track_time.description}\n'
 
         body = ClockifyTrackTimeRequest(billable=found_project.billable,
                                         description=track_time.description,
-                                        start=handle_time(track_time.start_work_at),
-                                        end=handle_time(track_time.end_work_at),
+                                        start=handle_time(user_timezone, track_time.day_at, track_time.start_work_at),
+                                        end=handle_time(user_timezone, track_time.day_at, track_time.end_work_at),
                                         project_id=found_project.id,
                                         type='REGULAR')
 
