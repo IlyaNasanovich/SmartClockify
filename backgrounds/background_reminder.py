@@ -7,8 +7,17 @@ from sc_data.repository import get_all_users, get_tracks
 from bot import bot
 
 
+def is_weekend() -> bool:
+    today = datetime.now().weekday()
+    return today in (5, 6)
+
+
 async def run_background_reminder():
     print('[run_background_reminder] Start')
+
+    if is_weekend():
+        print('[run_background_reminder] End. Today is weekend')
+        return
 
     users = get_all_users()
     today_date = datetime.now().date()
