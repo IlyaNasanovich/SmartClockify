@@ -16,7 +16,7 @@ def cache_track_time(user: int, chat: int, end: str, track_id: str) -> bool:
     if not track_exists:
         records.append({
             'end': end,
-            'track_id': track_exists
+            'track_id': track_id
         })
 
     current_date = datetime.utcnow()
