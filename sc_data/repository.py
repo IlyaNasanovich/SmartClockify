@@ -1,6 +1,6 @@
 from typing import Optional
 
-from sc_data.database import execute_query, get_one
+from sc_data.database import execute_query, get_one, get_all
 
 
 def initialize_db():
@@ -47,3 +47,22 @@ def extract_confirmation_info(chat: int, user: int):
         if value is None:
             return None, None, None
         return value[0], value[1], value[2]
+
+
+def get_all_users():
+    with open('./sc_data/queries/get_all_users.sql') as file:
+        return [{ 'apikey': u[0], 'clockify_user_id': u[1], 'user_id': u[2], 'chat_id': u[3] } for u in get_all(file.read())]
+
+
+def get_tracks(chat: int, user: int):
+    with open('./sc_data/queries/get_tracks.sql') as file:
+        value = get_one(file.read(), (chat, user))
+
+        if value is None:
+            return None
+        return value[0]
+
+
+def save_tracks(data: str, chat: int, user: int):
+    with open('./sc_data/queries/update_tracks.sql') as file:
+        execute_query(file.read(), (data, chat, user))

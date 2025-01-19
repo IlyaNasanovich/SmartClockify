@@ -12,7 +12,7 @@ from json import dumps
 from pydantic.json import pydantic_encoder
 from langchain_community.callbacks.manager import get_openai_callback
 
-from clockify.track_time.track_time_request import save_tracked_time, ClockifyTrackTimeRequest
+from clockify.track_time.track_time_request import ClockifyTrackTimeRequest
 from datetime import datetime, date
 
 from mixpanel import log_business_event

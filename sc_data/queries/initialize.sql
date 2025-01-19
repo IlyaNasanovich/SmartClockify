@@ -9,5 +9,6 @@ CREATE TABLE IF NOT EXISTS users (
     clockify_timezone TEXT,
     tracking_time_confirmation TEXT,
     confirmation_message_id INTEGER,
+    track_times TEXT,
     PRIMARY KEY (chat_id, user_id)
 );

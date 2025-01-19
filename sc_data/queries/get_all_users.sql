@@ -1,0 +1,1 @@
+SELECT clockify_apikey, clockify_user_id, user_id, chat_id FROM users

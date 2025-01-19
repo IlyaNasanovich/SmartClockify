@@ -8,3 +8,7 @@ class ClockifyTrackTimeRequest(BaseModel):
     end: str = Field()
     project_id: str = Field(serialization_alias='projectId')
     type: str = Field(default='REGULAR')
+
+
+class ClockifyTrackTimeResponse(BaseModel):
+    id: str = Field()

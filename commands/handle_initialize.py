@@ -31,7 +31,7 @@ async def handle_initialize(message: Message, state: FSMContext) -> None:
             f'Initialized successfully. You can start tracking your working time.\nExample:\nToday I worked 12:00 to 14:30 on Excel project, I did a big table about our assets\nYou can specify the day, for example, I worked yesterday or 3 days ago',
             reply_markup=ReplyKeyboardMarkup(
                 keyboard=[
-                    [KeyboardButton(text='Delete token')]
+                    [KeyboardButton(text='Delete token'), KeyboardButton(text='List of projects')]
                 ],
                 resize_keyboard=True
             )
