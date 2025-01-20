@@ -23,7 +23,7 @@ def cache_track_time(user: int, chat: int, end: str, track_id: str) -> bool:
 
     records = [
         record for record in records
-        if (current_date - timedelta(weeks=2)).replace(tzinfo=utc) <= datetime.fromisoformat(record['end']).replace(tzinfo=utc)
+        if (current_date - timedelta(weeks=10)).replace(tzinfo=utc) <= datetime.fromisoformat(record['end']).replace(tzinfo=utc)
     ]
 
     save_tracks(dumps(records), chat, user)
